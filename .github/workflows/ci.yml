@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
@@ -17,17 +19,32 @@ jobs:
         run:
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-      - name: Build the Docker image
-        run: docker build -t vivek091195/multi-client ./client
-        run: docker build -t vivek091195/multi-nginx -f Dockerfile.dev ./nginx
-        run: docker build -t vivek091195/multi-server ./server
-        run: docker build -t vivek091195/multi-server ./worker
+      - name: Build Client image
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-client ./client
+      
+      - name: Build nginx
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-nginx ./nginx
+             
+      - name: Build server
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-server ./server
+
+      - name: Build worker
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-worker ./worker
+             
 
       # - name: Run the tests
       #   run: docker run -e CI=true vivek091195/multi-container-docker-app npm run test -- --coverage
 
-      - name: Docker push
+      - name: Push client
         run: docker push ${{secrets.DOCKER_USERNAME}}/multi-client
+
+      - name: Push nginx
         run: docker push ${{secrets.DOCKER_USERNAME}}/multi-nginx
+
+      - name: Push server
         run: docker push ${{secrets.DOCKER_USERNAME}}/multi-server
-        run: docker push ${{secrets.DOCKER_USERNAME}}/multi-server
+      
+      - name: Push worker
+        run: docker push ${{secrets.DOCKER_USERNAME}}/multi-worker
+             
+             
