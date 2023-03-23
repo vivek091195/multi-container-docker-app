@@ -23,7 +23,7 @@ jobs:
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-client ./client
       
       - name: Build nginx
-        run: docker build ./nginx --file Dockerfile.dev -t ${{secrets.DOCKER_USERNAME}}/multi-nginx
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-nginx ./nginx
              
       - name: Build server
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-server ./server
