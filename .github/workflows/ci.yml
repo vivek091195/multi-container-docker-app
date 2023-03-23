@@ -21,15 +21,15 @@ jobs:
 
       - name: Build the Docker image
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-client ./client
-        # run: docker build -t vivek091195/multi-nginx -f Dockerfile.dev ./nginx
-        # run: docker build -t vivek091195/multi-server ./server
-        # run: docker build -t vivek091195/multi-server ./worker
+             docker build -t vivek091195/multi-nginx -f Dockerfile.dev ./nginx
+             docker build -t vivek091195/multi-server ./server
+             docker build -t vivek091195/multi-server ./worker
 
       # - name: Run the tests
       #   run: docker run -e CI=true vivek091195/multi-container-docker-app npm run test -- --coverage
 
       - name: Docker push
         run: docker push ${{secrets.DOCKER_USERNAME}}/multi-client
-        # run: docker push ${{secrets.DOCKER_USERNAME}}/multi-nginx
-        # run: docker push ${{secrets.DOCKER_USERNAME}}/multi-server
-        # run: docker push ${{secrets.DOCKER_USERNAME}}/multi-server
+             docker push ${{secrets.DOCKER_USERNAME}}/multi-nginx
+             docker push ${{secrets.DOCKER_USERNAME}}/multi-server
+             docker push ${{secrets.DOCKER_USERNAME}}/multi-server
