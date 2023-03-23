@@ -23,13 +23,13 @@ jobs:
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-client ./client
       
       - name: Build nginx
-        run: docker build -t vivek091195/multi-nginx -f Dockerfile.dev ./nginx
+        run: docker build ./nginx --file Dockerfile.dev -t ${{secrets.DOCKER_USERNAME}}/multi-nginx
              
       - name: Build server
-        run: docker build -t vivek091195/multi-server ./server
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-server ./server
 
       - name: Build worker
-        run: docker build -t vivek091195/multi-server ./worker
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/multi-server ./worker
              
 
       # - name: Run the tests
